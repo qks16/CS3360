@@ -44,5 +44,18 @@ int main() {
         workload[i].printProcess(arrival_times[i]);
     }
 
+    // Calculate actual averages
+    double total_service_time = 0.0;
+    for (const auto& proc : workload) {
+        total_service_time += proc.getServiceTime();
+    }
+    double actual_avg_service_time = total_service_time / NUM_PROCESSES;
+    double total_time = arrival_times.back();
+    double actual_avg_arrival_rate = NUM_PROCESSES / total_time;
+
+    // Print actual averages
+    cout << "\nActual average arrival rate: " << actual_avg_arrival_rate << " processes per second" << endl;
+    cout << "Actual average service time: " << actual_avg_service_time << " seconds" << endl;
+
     return 0;
 }

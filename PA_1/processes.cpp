@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cmath>
 #include <cstdlib>
+#include <fstream>
 
 namespace processes {
     class Process {
@@ -19,8 +20,18 @@ namespace processes {
             return interarrival_time;
         }
 
+        double getServiceTime() const {
+            return service_time;
+        }
+
         void printProcess(double arrival_time) const {
-            std::cout << "<" << id << ", " << arrival_time << ", " << service_time << ">" << std::endl;
+            std::fstream outfile("processes_output.txt", std::ios::app); // Open file in append mode
+            if (outfile.is_open()) {
+                outfile << "<" << id << ", " << arrival_time << ", " << service_time << ">" << std::endl;
+                outfile.close();
+            } else {
+                std::cerr << "Unable to open file for writing." << std::endl;
+            }
         }
     };
 }
