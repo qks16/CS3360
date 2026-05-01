@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
-#include <algorithm>
+#include <cstdlib>
+#include <ctime>
 #include "processes.cpp"
 
 /*Using a pseudo random number generation function (e.g., rand() in C or other
@@ -29,20 +30,18 @@ int main() {
 
     // generate system workload
     vector<processes::Process> workload;
+    vector<double> arrival_times;
 
     for (size_t i = 0; i < NUM_PROCESSES; ++i) {
-        processes::Process proc(i + 1, AVG_ARRIVAL_RATE, AVG_SERVICE_RATE, current_time); // Create a new process with the specified average arrival and service times
+        processes::Process proc(i + 1, AVG_ARRIVAL_RATE, AVG_SERVICE_RATE); // Create a new process with the specified average arrival and service times
 
-        // Update the current time to the arrival time of the newly created process
-        current_time += proc.getinterarrivalTime();
-
-        proc.setArrivalTime(current_time);
-
+        current_time += proc.getInterarrivalTime();
         workload.push_back(proc); // Add the process to the workload vector
+        arrival_times.push_back(current_time);
     }
     // print the workload
     for (size_t i = 0; i < NUM_PROCESSES; ++i) {
-        workload[i].printProcess();
+        workload[i].printProcess(arrival_times[i]);
     }
 
     return 0;
